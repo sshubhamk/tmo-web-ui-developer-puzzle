@@ -11,13 +11,16 @@
 .reading-list-item {
   display: flex;
   justify-content: center;
-  margin-bottom: $spacing-xs;
+  margin-bottom: $spacing-sm;
   width: 100%;
 
   > * {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+  .action-icons {
+    display: inline-block;
   }
 }
 
@@ -44,4 +47,9 @@
   font-weight: 100;
   font-size: 1rem;
   color: $gray60;
+}
+
+.btn-finished-reading {
+  color: gray;
+  cursor: default;
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getReadingList, removeFromReadingList } from '@tmo/books/data-access';
+import { getReadingList, removeFromReadingList, updateBookFromReadingList } from '@tmo/books/data-access';
+import { ReadingListItem } from '@tmo/shared/models';
 
 @Component({
   selector: 'tmo-reading-list',
@@ -10,9 +11,21 @@ import { getReadingList, removeFromReadingList } from '@tmo/books/data-access';
 export class ReadingListComponent {
   readingList$ = this.store.select(getReadingList);
 
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store) { }
 
-  removeFromReadingList(item) {
+  removeFromReadingList(item: ReadingListItem) {
     this.store.dispatch(removeFromReadingList({ item }));
+  }
+
+  markBookAsFinishedReading(item: ReadingListItem) {
+    this.store.dispatch(
+      updateBookFromReadingList({
+        item: {
+          ...item,
+          finished: true,
+          finishedDate: new Date().toISOString(),
+        },
+      })
+    );
   }
 }
