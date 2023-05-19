@@ -28,6 +28,7 @@ export const initialState: State = readingListAdapter.getInitialState({
 
 const readingListReducer = createReducer(
   initialState,
+
   on(ReadingListActions.init, state => {
     return {
       ...state,
