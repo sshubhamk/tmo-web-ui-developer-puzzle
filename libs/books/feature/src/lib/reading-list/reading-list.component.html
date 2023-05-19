@@ -1,4 +1,4 @@
-<ng-container *ngIf="(readingList$ | async).length > 0; else empty">
+<ng-container *ngIf="(readingList$ | async).length; else empty">
   <div class="reading-list-item" *ngFor="let b of readingList$ | async">
     <div>
       <img class="reading-list-item--cover" [alt]="b.coverUrl" [src]="b.coverUrl" />
@@ -6,10 +6,18 @@
     <div class="reading-list-item--details">
       <strong class="reading-list-item--details--title">{{ b.title }}</strong>
       <div class="reading-list-item--details--author">
-        {{ b?.authors?.join(',') }}
+        {{ b?.authors?.join(',') }} <br />
+        <b *ngIf="b?.finished" class="finished-date">
+          Finished reading on {{ (b?.finishedDate) | date:'mediumDate' }}
+        </b>
+        <br>
       </div>
     </div>
-    <div>
+    <div class="action-icons">
+      <button mat-icon-button color="primary" [attr.aria-label]="'Finished reading ' + b.title"
+        (click)="markBookAsFinishedReading(b)">
+        <mat-icon [ngClass]="{'btn-finished-reading': b.finished}">check_circle</mat-icon>
+      </button>
       <button mat-icon-button color="warn" [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
         (click)="removeFromReadingList(b)">
         <mat-icon>remove_circle</mat-icon>

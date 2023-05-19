@@ -74,8 +74,12 @@ form {
 span {
   cursor: pointer;
   color: $pink-accent;
-
   &:hover {
     color: $pink-dark;
   }
+}
+
+.finished {
+  color: white !important;
+  background-color: #545b62 !important;
 }

@@ -1,3 +1,4 @@
+import { ReadingListItem } from '@tmo/shared/models';
 import * as ReadingListActions from './reading-list.actions';
 import {
   initialState,
@@ -50,6 +51,29 @@ describe('Books Reducer', () => {
       const result: State = reducer(state, action);
 
       expect(result.ids).toEqual(['A', 'B', 'C']);
+    });
+
+    it('confirm updateBookFromReadingList should mark book as finished', () => {
+      const item = createReadingListItem('A');
+      const bookItem: ReadingListItem = {
+        bookId: 'A',
+        title: '',
+        description: '',
+        authors: [''],
+        finished: true,
+        finishedDate: new Date().toISOString(),
+      }
+      const action = ReadingListActions.updateBookFromReadingList({ item: bookItem });
+      const result: State = reducer(state, action);
+      expect(result.entities['A'].finished).toEqual(true);
+    });
+
+    it('failedUpdateBookFromReadingList should not mark book as finished', () => {
+      const action = ReadingListActions.failedUpdateBookFromReadingList({
+        item: createReadingListItem('B'),
+      });
+      const result: State = reducer(state, action);
+      expect(result.entities['B'].finished).toBeUndefined();
     });
   });
 
